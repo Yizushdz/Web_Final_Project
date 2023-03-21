@@ -2,8 +2,10 @@
 from flask import Flask
 # to use database
 from flask_sqlalchemy import SQLAlchemy
-# 
+# needed to check if a path exists
 from os import path
+# used to tell flask how we actually log in a user
+from flask_login import LoginManager
 
 # initialize new database, db is an object
 db = SQLAlchemy()
@@ -35,6 +37,19 @@ def create_app():
 
     with app.app_context():
         db.create_all()
+
+    # creating login class to manage having a user logged in
+    login_manager = LoginManager()
+    # where should we go if user is not logged in. = 'BlueprintName.funcName'
+    login_manager.login_view = 'auth.login'
+    # telling login manager which app we are refering to
+    login_manager.init_app(app)
+
+    # decorator to help us tell flask how we load a user
+    @login_manager.user_loader
+    # essentially telling flask what user we are looking for, reference them by their ID
+    def load_user(id):
+        return User.query.get(int(id))
 
     return app
 

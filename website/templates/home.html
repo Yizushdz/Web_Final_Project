@@ -2,4 +2,22 @@
 {% extends "base.html" %}
 
 {% block title %}Home{% endblock %}
-{% block content %} <h1>This is the home page</h1> {% endblock %}
+{% block content %}
+<!--header for all notes for a single user-->
+<h1 align="center">Notes</h1>
+<!--using boostrap class to create list of notes-->
+<ul class="list-group list-group-flush" id="notes">
+    <!--user.data means our current user obj, get their data attribute defined in models.py-->
+  {% for note in user.data %}
+  <li class="list-group-item">{{ note.data }}</li>
+  {% endfor %}
+</ul>
+<!--send POST request when user presses button to URL-->
+<form method="POST">
+    <textarea name="note" id="note" class="form-control"></textarea>
+    <br />
+    <div align="center">
+      <button type="submit" class="btn btn-primary">Add Note</button>
+    </div>
+  </form>
+{% endblock %}

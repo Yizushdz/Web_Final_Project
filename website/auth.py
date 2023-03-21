@@ -6,16 +6,19 @@ from .models import User
 from . import db
 # hash used so we don't actually store user's pw as is, rather store them as hash links for security
 from werkzeug.security import generate_password_hash, check_password_hash
+# required to deal with user being logged in already and logging out
+from flask_login import login_user, login_required, logout_user, current_user
 
 # set up blueprint for flask application, same name as file not required, but standard
 auth = Blueprint('auth', __name__)
+
 
 # we will define the log-in, sign-up, and log-out in here
 @auth.route('/login', methods = ["GET", "POST"])
 def login():
     # if user tring to log in
     if request.method == "POST":
-        # get email they input and store it in variable email
+        # retrieve email they input and store it in variable email
         email = request.form.get("email")
         # .get("str"), where "str" must match name parameter from login.html div
         password = request.form.get("password")
@@ -28,6 +31,8 @@ def login():
             if check_password_hash(user.password, password):
                 # proceed to log in
                 flash("Logged in successfully.", category="success")
+                #to actually log in the user, remember will assure user is logged in while page running
+                login_user(user, remember=True)
                 return redirect(url_for("views.home"))
             # email exists but password is wrong
             else:
@@ -35,18 +40,19 @@ def login():
         # user email does NOT exist
         else:
             flash("Email does NOT exist. Check email is right or sign up.", category="error")
+    # passing curr_user allows us to reference user in template to check if authenticated
+    return render_template("login.html", user = current_user)
 
-
-    # to retrieve all data that was sent as part of a form
-    # data = request.form
-    # print(data)
-
-
-    return render_template("login.html")
 
 @auth.route('/logout')
+# user must be logged in to access this part of app, so we make a decorator
+@login_required
 def logout():
-    return "<p>Logout</p>"
+    # to actually log out user
+    logout_user()
+    # redirect user to login page
+    return redirect(url_for("auth.login"))
+
 
 # methods: we are now able to receive POST and GET requests from these routes
 @auth.route('/sign-up', methods = ['GET', 'POST'])
@@ -83,9 +89,11 @@ def sign_up():
             db.session.add(new_user)
             # once we make change in database, we must commit change doing:
             db.session.commit()
+            #to actually log in the user, remember will assure user is logged in while page running
+            login_user(user, remember=True)
             flash("Account successfully created.", category="success")
             # redirect us to the url for the home page after account is created
             # note: url_for("blueprintName.functionName")
             return redirect(url_for("views.home"))
-
-    return render_template("sign_up.html")
+    # passing curr_user allows us to reference user in template to check if authenticated
+    return render_template("sign_up.html", user = current_user)
