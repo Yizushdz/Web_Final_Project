@@ -2,10 +2,12 @@
 from flask import Flask
 # to use database
 from flask_sqlalchemy import SQLAlchemy
-# needed to check if a path exists
-from os import path
 # used to tell flask how we actually log in a user
 from flask_login import LoginManager
+
+'''NOT CUREENTLY USED, MODIFY'''
+# needed to check if a path exists
+# from os import path
 
 # initialize new database, db is an object
 db = SQLAlchemy()
@@ -41,7 +43,7 @@ def create_app():
     # creating login class to manage having a user logged in
     login_manager = LoginManager()
     # where should we go if user is not logged in. = 'BlueprintName.funcName'
-    login_manager.login_view = 'auth.login'
+    login_manager.login_view = 'views.initial'
     # telling login manager which app we are refering to
     login_manager.init_app(app)
 
@@ -55,10 +57,10 @@ def create_app():
 
 
 
+'''NOT CUREENTLY USED, MODIFY'''
 # to create database, and check if database already exists, if not, create new one
 # with app.app_context(): \n db.create_all()
-'''NOT CUREENTLY USED, MODIFY'''
-def create_database(app):
-    if not path.exists('website/' + DB_NAME):
-        db.create_all(app = app)
-        print("Created Database")
+# def create_database(app):
+#     if not path.exists('website/' + DB_NAME):
+#         db.create_all(app = app)
+#         print("Created Database")

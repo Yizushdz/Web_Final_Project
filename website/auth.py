@@ -51,7 +51,7 @@ def logout():
     # to actually log out user
     logout_user()
     # redirect user to login page
-    return redirect(url_for("auth.login"))
+    return redirect(url_for("views.initial"))
 
 
 # methods: we are now able to receive POST and GET requests from these routes

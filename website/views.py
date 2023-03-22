@@ -8,7 +8,7 @@ from flask_login import login_required, current_user
 views = Blueprint('views', __name__)
 
 # @nameOfBlueprint.route('URL to get to this endpoint')
-@views.route('/')
+@views.route('/home')
 @login_required
 # when user gets to this route, the following function will be ran
 def home():
@@ -22,3 +22,7 @@ def study_session():
 @views.route('/practice-problems')
 def practice_problems():
     return render_template("practice_problems.html", user = current_user)
+
+@views.route('/')
+def initial():
+    return render_template("initial.html", user = current_user)
