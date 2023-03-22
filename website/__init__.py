@@ -30,7 +30,7 @@ def create_app():
     app.register_blueprint(auth, url_prefix = '/')
 
     # this will make sure that our database classes are properly created before we actually create the databases
-    from .models import User, Deck
+    from .models import User
 
     # calling function to create database if not exists
     # create_database(app)
