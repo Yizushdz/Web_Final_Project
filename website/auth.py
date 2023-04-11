@@ -24,15 +24,15 @@ def login():
         password = request.form.get("password")
         # see if email user inputed is already in database
         # we filter all entries in database that match email user inputed, should be one or DNE
-        user = User.query.filter_by(email = email).first()
+        userExists = User.query.filter_by(email = email).first()
         # if we actually found a matching email:
-        if user:
+        if userExists:
             # check if password associated with that existing user matches password entered by user in login page
-            if check_password_hash(user.password, password):
+            if check_password_hash(userExists.password, password):
                 # proceed to log in
                 flash("Logged in successfully.", category="success")
                 #to actually log in the user, remember will assure user is logged in while page running
-                login_user(user, remember=True)
+                login_user(userExists, remember=True)
                 return redirect(url_for("views.home"))
             # email exists but password is wrong
             else:
@@ -67,10 +67,10 @@ def sign_up():
         password2 = request.form.get("password2")
 
         # variable to check if email inputed already exists in database
-        user = User.query.filter_by(email = email).first()
+        userExists = User.query.filter_by(email = email).first()
 
         # check if user entered an existing email
-        if user:
+        if userExists:
             flash("Email already exists. Try loggin in instead.", category="error")
         # checking if the info provided by user is valid
         elif len(email) < 4:
@@ -90,7 +90,7 @@ def sign_up():
             # once we make change in database, we must commit change doing:
             db.session.commit()
             #to actually log in the user, remember will assure user is logged in while page running
-            login_user(user, remember=True)
+            login_user(new_user, remember=True)
             flash("Account successfully created.", category="success")
             # redirect us to the url for the home page after account is created
             # note: url_for("blueprintName.functionName")

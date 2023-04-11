@@ -4,13 +4,22 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 # used to tell flask how we actually log in a user
 from flask_login import LoginManager
+# to migrate database when needed
+from flask_migrate import Migrate
+# needed to properly upgrade database after migration, fixes naming convention
+from sqlalchemy import MetaData
 
-'''NOT CUREENTLY USED, MODIFY'''
-# needed to check if a path exists
-# from os import path
+convention = {
+    "ix": 'ix_%(column_0_label)s',
+    "uq": "uq_%(table_name)s_%(column_0_name)s",
+    "ck": "ck_%(table_name)s_%(constraint_name)s",
+    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
+    "pk": "pk_%(table_name)s"
+}
+metadata = MetaData(naming_convention=convention)
 
 # initialize new database, db is an object
-db = SQLAlchemy()
+db = SQLAlchemy(metadata=metadata)
 DB_NAME = "database.db"
 
 def create_app():
@@ -22,6 +31,7 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{DB_NAME}"
     # initialize database by giving it our flask app
     db.init_app(app)
+    migrate = Migrate(app, db, render_as_batch=True)
 
     # telling flask we have Blueprints for some URLs & where they are. Dot == explicit relative import
     from .views import views
@@ -33,9 +43,6 @@ def create_app():
 
     # this will make sure that our database classes are properly created before we actually create the databases
     from .models import User
-
-    # calling function to create database if not exists
-    # create_database(app)
 
     with app.app_context():
         db.create_all()
@@ -54,13 +61,3 @@ def create_app():
         return User.query.get(int(id))
 
     return app
-
-
-
-'''NOT CUREENTLY USED, MODIFY'''
-# to create database, and check if database already exists, if not, create new one
-# with app.app_context(): \n db.create_all()
-# def create_database(app):
-#     if not path.exists('website/' + DB_NAME):
-#         db.create_all(app = app)
-#         print("Created Database")

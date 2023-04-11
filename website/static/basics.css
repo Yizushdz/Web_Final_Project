@@ -1,0 +1,41 @@
+body {
+    background-color: #9FBBBB;
+    margin-top: 0%;
+    margin-left: 0%;
+    margin-right: 0%;
+  }
+
+  input[type=text] {
+    border: none;
+    border-bottom: 2px solid rgb(61, 64, 63);
+  }
+  
+  input[type=email] {
+    border: none;
+    border-bottom: 2px solid rgb(61, 64, 63);
+  }
+
+  input[type=password] {
+    border: none;
+    border-bottom: 2px solid rgb(61, 64, 63);
+  }
+
+  .rectangle {
+    height: 250px;
+    width: 450px;
+    background-color: rgb(61, 64, 63);
+    margin: auto;
+    border-radius: 25px;
+  }
+  .rectangle:hover {
+    background-color: #515151;
+  }
+
+  .center {
+    padding: 70px 0;
+    text-align: center;
+  }
+
+  h4.delete-button {
+    text-indent: 70%;
+  }

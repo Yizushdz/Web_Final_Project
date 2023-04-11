@@ -3,9 +3,71 @@
 
 {% block title %}Home{% endblock %}
 {% block content %}
-<h1>This is the home page</h1>
-<h2>This is the home page</h2>
 <br />
-<h2 align="center" >My Decks</h2>
-<h2 align="center" >My Decks</h2>
+<div class="container">
+    <a href="#">
+        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter">Add New Deck</button>
+    </a>
+    <a href="/practice-problems">
+        <button type="button" class="btn btn-warning">Browse Problems</button>
+    </a>
+</div>
+<br />
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <form method="POST">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Deck Name</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="deckName">Enter name for your new deck. You can add flashcards later.</label>
+                        <!--the 'name' will allow us to access the email adress in the backend-->
+                        <input type="text" class="form-control" id="deckName" name="deckName" placeholder="My Deck 1"/>
+                    </div>
+                    <br />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Exit</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<h1 align="center" >My Decks</h1>
+<br />
+
+{% for deck in user.decks %}
+    <div class="rectangle">
+        <a href="/study-session">
+            <h3 class="center" style="color: white">{{ deck.name }}</h3>
+        </a>
+    </div>
+    <a href="{{ url_for('views.delete', id = deck.id) }}">
+        <h4 class="delete-button" style="color: rgb(234, 0, 0)">Delete</h4>
+    </a>
+    <br />
+    <br />
+{% endfor %}
+
+
+<script>
+    function openForm() {
+      document.getElementById("myForm").style.display = "block";
+    }
+    
+    function closeForm() {
+      document.getElementById("myForm").style.display = "none";
+    }
+    </script>
+
 {% endblock %}
