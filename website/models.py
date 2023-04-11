@@ -2,8 +2,6 @@
 from . import db
 # used to help handle user login
 from flask_login import UserMixin
-# used to get current time and store it for each deck of flashcards
-from sqlalchemy.sql import func
 
 # make a 1-to-many relationship between deck and individual flashcards, then 1 user to many decks
 
@@ -15,14 +13,21 @@ class Flashcard(db.Model):
     # to store ID of deck each flashcard belongs to, many flashcards will belong to single deck
     deck_id = db.Column(db.Integer, db.ForeignKey('deck.id'))
 
+    def __repr__(self):
+        return f'<Flashcard "{self.question[:10]}">'
+
 class Deck(db.Model):
+    '''name, flashcards, user_id'''
     id = db.Column(db.Integer, primary_key = True)
     # to store date of each deck we make
-    date = db.Column(db.DateTime(timezone = True), default = func.now())
+    name = db.Column(db.String(100))
     # to store all flashcard IDs that belong to this deck
-    flashcards = db.relationship('Flashcard')
+    flashcards = db.relationship('Flashcard', backref = "currDeck")
     # to store ID of user to which the deck belongs to
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def __repr__(self):
+        return f'<Deck "{self.name}">'
 
 # class for user data, inherits from db we created in __init__.py, and UserMixin
 class User(db.Model, UserMixin):
@@ -36,4 +41,8 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(100))
     last_name = db.Column(db.String(100))
     # to store all decks that belong to a single user
-    userDecks = db.relationship('Deck')
+    decks = db.relationship('Deck', backref = 'user')
+
+    # __repr__ will give each obj a string representation for debugging purposes
+    def __repr__(self):
+        return f'<User "{self.first_name}">'
