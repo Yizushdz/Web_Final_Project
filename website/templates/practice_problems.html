@@ -17,17 +17,295 @@
 <body>
     <h1 class="text-center mb-5">This is the practice problems page</h1>
 
+
+
+    <!----------------------------------------------------->
+
     <div class="d-flex flex-column align-items-center">
         <div class="btn-group btn-group-toggle mb-3">
-            <button type="button" class="btn btn-primary reset-btn">
+            <a href="https://leetcode.com/problems/contains-duplicate/" target="_blank"
+                class="btn btn-primary reset-btn">
                 <div>
                     <p class="mb-0">Contains Duplicate</p>
                     <p class="mb-0">Difficulty : Easy</p>
                 </div>
-            </button>
-            <button type="button" class="btn btn-primary reset-btn btn-lg"><i class="fa-regular fa-circle-plus"></i></button>
+            </a>
+
+            <a href="#">
+
+                <button type="button" class="btn btn-primary reset-btn btn-lg" data-toggle="modal"
+                    data-target="#exampleModalCenter"><i class="fa-solid fa-plus"></i>
+                </button>
+
+            </a>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <form method="POST">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Deck Name</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="deckName">Which deck would you like to add the problem in ? </label>
+                                    <!--the 'name' will allow us to access the email adress in the backend-->
+                                    <div class="dropdown">
+                                        <button class="btn btn-primary dropdown-toggle" type="button"
+                                            data-toggle="dropdown">Your Decks 👩‍💻
+                                            <span class="caret"></span></button>
+                                        <ul class="dropdown-menu">
+
+                                            {% for deck in user.decks %}
+                                            <li><a href="{{ url_for('views.add', id = deck.id) }}">{{deck.name}}</a></li>
+                                            
+
+
+                                         
+                                            {% endfor %}
+
+
+
+
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Exit</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
         </div>
     </div>
+
+    <!----------------------------------------------------->
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="d-flex flex-column align-items-center">
+        <div class="btn-group btn-group-toggle mb-3">
+            <a href="https://leetcode.com/problems/valid-anagram/" target="_blank" class="btn btn-primary reset-btn">
+                <div>
+                    <p class="mb-0">Valid Anagram</p>
+                    <p class="mb-0">Difficulty : Easy</p>
+                </div>
+            </a>
+            <button type="button" class="btn btn-primary reset-btn btn-lg"><i class="fa-solid fa-plus"></i></button>
+        </div>
+    </div>
+
+    <div class="d-flex flex-column align-items-center">
+        <div class="btn-group btn-group-toggle mb-3">
+            <a href="https://leetcode.com/problems/two-sum/" target="_blank" class="btn btn-primary reset-btn">
+                <div>
+                    <p class="mb-0">Two Sum</p>
+                    <p class="mb-0">Difficulty : Easy</p>
+                </div>
+            </a>
+            <button type="button" class="btn btn-primary reset-btn btn-lg"><i class="fa-solid fa-plus"></i></button>
+        </div>
+    </div>
+
+    <div class="d-flex flex-column align-items-center">
+        <div class="btn-group btn-group-toggle mb-3">
+            <a href="https://leetcode.com/problems/group-anagrams/" target="_blank" class="btn btn-primary reset-btn">
+                <div>
+                    <p class="mb-0">Group Anagrams</p>
+                    <p class="mb-0">Difficulty : Medium</p>
+                </div>
+            </a>
+            <button type="button" class="btn btn-primary reset-btn btn-lg"><i class="fa-solid fa-plus"></i></button>
+        </div>
+    </div>
+
+    <div class="d-flex flex-column align-items-center">
+        <div class="btn-group btn-group-toggle mb-3">
+            <a href="https://leetcode.com/problems/top-k-frequent-elements/" target="_blank"
+                class="btn btn-primary reset-btn">
+                <div>
+                    <p class="mb-0">Top K Frequent Elements</p>
+                    <p class="mb-0">Difficulty : Medium</p>
+                </div>
+            </a>
+            <button type="button" class="btn btn-primary reset-btn btn-lg"><i class="fa-solid fa-plus"></i></button>
+        </div>
+    </div>
+
+    <div class="d-flex flex-column align-items-center">
+        <div class="btn-group btn-group-toggle mb-3">
+            <a href="https://leetcode.com/problems/product-of-array-except-self/" target="_blank"
+                class="btn btn-primary reset-btn">
+                <div>
+                    <p class="mb-0">Product of Array Except Self</p>
+                    <p class="mb-0">Difficulty : Medium</p>
+                </div>
+            </a>
+            <button type="button" class="btn btn-primary reset-btn btn-lg"><i class="fa-solid fa-plus"></i></button>
+        </div>
+    </div>
+
+    <div class="d-flex flex-column align-items-center">
+        <div class="btn-group btn-group-toggle mb-3">
+            <a href="https://leetcode.com/problems/longest-consecutive-sequence/" target="_blank"
+                class="btn btn-primary reset-btn">
+                <div>
+                    <p class="mb-0">Longest Consecutive Sequence</p>
+                    <p class="mb-0">Difficulty : Medium</p>
+                </div>
+            </a>
+            <button type="button" class="btn btn-primary reset-btn btn-lg"><i class="fa-solid fa-plus"></i></button>
+        </div>
+    </div>
+
+    <div class="d-flex flex-column align-items-center">
+        <div class="btn-group btn-group-toggle mb-3">
+            <a href="https://leetcode.com/problems/valid-palindrome/" target="_blank" class="btn btn-primary reset-btn">
+                <div>
+                    <p class="mb-0">Valid Palindrome</p>
+                    <p class="mb-0">Difficulty : Easy</p>
+                </div>
+            </a>
+            <button type="button" class="btn btn-primary reset-btn btn-lg"><i class="fa-solid fa-plus"></i></button>
+        </div>
+    </div>
+
+    <div class="d-flex flex-column align-items-center">
+        <div class="btn-group btn-group-toggle mb-3">
+            <a href="https://leetcode.com/problems/3sum/" target="_blank" class="btn btn-primary reset-btn">
+                <div>
+                    <p class="mb-0">3Sum</p>
+                    <p class="mb-0">Difficulty : Medium</p>
+                </div>
+            </a>
+            <button type="button" class="btn btn-primary reset-btn btn-lg"><i class="fa-solid fa-plus"></i></button>
+        </div>
+    </div>
+
+    <div class="d-flex flex-column align-items-center">
+        <div class="btn-group btn-group-toggle mb-3">
+            <a href="https://leetcode.com/problems/container-with-most-water/" target="_blank"
+                class="btn btn-primary reset-btn">
+                <div>
+                    <p class="mb-0">Container With Most Water</p>
+                    <p class="mb-0">Difficulty : Medium</p>
+                </div>
+            </a>
+            <button type="button" class="btn btn-primary reset-btn btn-lg"><i class="fa-solid fa-plus"></i></button>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <div class="d-flex flex-column align-items-center">
+        <div class="btn-group btn-group-toggle mb-3">
+            <a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock/" target="_blank"
+                class="btn btn-primary reset-btn">
+                <div>
+                    <p class="mb-0">Best Time to Buy and Sell Stock</p>
+                    <p class="mb-0">Difficulty : Easy</p>
+                </div>
+            </a>
+            <button type="button" class="btn btn-primary reset-btn btn-lg"><i class="fa-solid fa-plus"></i></button>
+        </div>
+    </div>
+
+    <div class="d-flex flex-column align-items-center">
+        <div class="btn-group btn-group-toggle mb-3">
+            <a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/" target="_blank"
+                class="btn btn-primary reset-btn">
+                <div>
+                    <p class="mb-0">Longest Substring Without Repeating Characters</p>
+                    <p class="mb-0">Difficulty : Medium</p>
+                </div>
+            </a>
+            <button type="button" class="btn btn-primary reset-btn btn-lg"><i class="fa-solid fa-plus"></i></button>
+        </div>
+    </div>
+
+    <div class="d-flex flex-column align-items-center">
+        <div class="btn-group btn-group-toggle mb-3">
+            <a href="https://leetcode.com/problems/longest-repeating-character-replacement/" target="_blank"
+                class="btn btn-primary reset-btn">
+                <div>
+                    <p class="mb-0">Longest Repeating Character Replacement</p>
+                    <p class="mb-0">Difficulty : Medium</p>
+                </div>
+            </a>
+            <button type="button" class="btn btn-primary reset-btn btn-lg"><i class="fa-solid fa-plus"></i></button>
+        </div>
+    </div>
+
+    <div class="d-flex flex-column align-items-center">
+        <div class="btn-group btn-group-toggle mb-3">
+            <a href="https://leetcode.com/problems/minimum-window-substring/" target="_blank"
+                class="btn btn-primary reset-btn">
+                <div>
+                    <p class="mb-0">Minimum Window Substring</p>
+                    <p class="mb-0">Difficulty : Hard</p>
+                </div>
+            </a>
+            <button type="button" class="btn btn-primary reset-btn btn-lg"><i class="fa-solid fa-plus"></i></button>
+        </div>
+    </div>
+
+
+
+    <div class="d-flex flex-column align-items-center">
+        <div class="btn-group btn-group-toggle mb-3">
+            <a href="https://leetcode.com/problems/valid-parentheses/" target="_blank"
+                class="btn btn-primary reset-btn">
+                <div>
+                    <p class="mb-0">Valid Parentheses</p>
+                    <p class="mb-0">Difficulty : Easy</p>
+                </div>
+            </a>
+            <button type="button" class="btn btn-primary reset-btn btn-lg"><i class="fa-solid fa-plus"></i></button>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <!-- Add more buttons with class 'reset-btn' -->
 
@@ -46,4 +324,4 @@
         });
     </script>
 
-{% endblock %}
+    {% endblock %}

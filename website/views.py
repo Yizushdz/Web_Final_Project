@@ -4,7 +4,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 # required to deal with user being logged in already and logging out
 from flask_login import login_required, current_user
 # to be able to create new deck
-from .models import Deck
+from .models import Deck, Flashcard
 # to access the database (db) we created in __init__.py
 from . import db
 
@@ -62,3 +62,22 @@ def delete(id):
     except:
         flash("Unable to delete deck.", category='error')
         return redirect(url_for('views.home'))
+    
+    
+@views.route('/add/<int:id>')
+def add(id):
+    deck_to_add_problem = Deck.query.get_or_404(id)
+    try:
+        new_flashcard = Flashcard(deck_id=id)
+        db.session.add(new_flashcard)
+        db.session.commit()
+
+        # Append the new Flashcard instance to the specific Deck's flashcards attribute
+        deck_to_add_problem.flashcards.append(new_flashcard)
+        db.session.commit()
+
+        flash("Problem Successfully Added", category='success')
+        return redirect(url_for('views.practice_problems'))
+    except:
+        flash("Unable to add", category='error')
+        return redirect(url_for('views.practice_problems'))
