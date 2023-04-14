@@ -8,8 +8,7 @@ from flask_login import UserMixin
 # add database related to individual flashcards
 class Flashcard(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    question = db.Column(db.String(10000))
-    answer = db.Column(db.String(10000))
+    name = db.Column(db.String(10000))
     # to store ID of deck each flashcard belongs to, many flashcards will belong to single deck
     deck_id = db.Column(db.Integer, db.ForeignKey('deck.id'))
 
