@@ -7,6 +7,8 @@ from flask_login import login_required, current_user
 from .models import Deck, Flashcard
 # to access the database (db) we created in __init__.py
 from . import db
+#
+from website import extract_problem_names
 
 # set up blueprint for flask application
 views = Blueprint('views', __name__)
@@ -43,7 +45,10 @@ def study_session():
 
 @views.route('/practice-problems')
 def practice_problems():
-    return render_template("practice_problems.html", user = current_user)
+    easy = extract_problem_names("LeetCodeEasy.txt")
+    medium = extract_problem_names("LeetCodeMedium.txt")
+    hard = extract_problem_names("LeetCodeHard.txt")
+    return render_template("practice_problems.html", user = current_user, easyProblems = easy, midProblems = medium, hardProblems = hard)
 
 
 @views.route('/')
@@ -66,16 +71,11 @@ def delete(id):
     
 @views.route('/add/<int:id>')
 def add(id):
-    deck_to_add_problem = Deck.query.get_or_404(id)
     try:
-        new_flashcard = Flashcard(deck_id=id)
+
+        new_flashcard = Flashcard(name = None, deck_id = id, user_id = current_user.id)
         db.session.add(new_flashcard)
         db.session.commit()
-
-        # Append the new Flashcard instance to the specific Deck's flashcards attribute
-        deck_to_add_problem.flashcards.append(new_flashcard)
-        db.session.commit()
-
         flash("Problem Successfully Added", category='success')
         return redirect(url_for('views.practice_problems'))
     except:
