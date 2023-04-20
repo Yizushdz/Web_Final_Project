@@ -43,6 +43,9 @@ def study_session():
     return render_template("study_session.html", user = current_user)
 
 
+    
+
+
 @views.route('/practice-problems')
 def practice_problems():
     easy = extract_problem_names("LeetCodeEasy.txt")
@@ -81,3 +84,15 @@ def add(id):
     except:
         flash("Unable to add", category='error')
         return redirect(url_for('views.practice_problems'))
+
+
+# @views.route('/print_deck/<int:id>')
+# def print_deck(id):
+#     try:
+#         current_deck = Deck.query.filter_by(id=id).first()
+#         return redirect(url_for('views.study_session'), deck = current_deck)
+
+#     except:
+#         flash("Unable to access deck", category='error')
+#         return redirect(url_for('views.home'))
+
