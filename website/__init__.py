@@ -8,6 +8,8 @@ from flask_login import LoginManager
 from flask_migrate import Migrate
 # needed to properly upgrade database after migration, fixes naming convention
 from sqlalchemy import MetaData
+# to get names form file
+import re
 
 convention = {
     "ix": 'ix_%(column_0_label)s',
@@ -21,6 +23,22 @@ metadata = MetaData(naming_convention=convention)
 # initialize new database, db is an object
 db = SQLAlchemy(metadata=metadata)
 DB_NAME = "database.db"
+
+
+# function to read leetcode links and extract the name of problem
+def extract_problem_names(file_path):
+    problem_names = []
+    with open(file_path, 'r') as file:
+        for line in file:
+            match = re.search(r'https://leetcode.com/problems/([^/]+)/', line)
+            if match:
+                name = match.group(1).title()
+                problem_names.append(name)
+    
+    # for problem in problem_names:
+    #     problem_names.append(problem.replace("-", " "))
+
+    return problem_names
 
 def create_app():
     # initialize the app
