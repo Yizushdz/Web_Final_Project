@@ -81,3 +81,8 @@ body {
     line-height: 30px;
 
   }
+
+  .btn-yellow {
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
