@@ -42,28 +42,31 @@ body {
 
 /* Formating the title text */
   h1 {
-    margin-top: 20px;
+    text-align: start;
+    margin-top: 50px;
     margin-bottom: 30px;
     font-family: Averta, sans-serif;
     color: #fff;
     font-size: 40px;
     line-height: 44px;
     font-weight: 700;
-    -webkit-text-stroke: 2px rgb(58, 100, 80);
+    /* -webkit-text-stroke: 2px rgb(58, 100, 80); */
   }
 /* Formating the quote text */
   h2 {
+    text-align: left;
     margin-top: 20px;
     margin-bottom: 30px;
     font-family: Averta, sans-serif;
     color: #fff;
-    font-size: 30px;
+    font-size: 22px;
     line-height: 44px;
     font-weight: 700;
   }
 
   /* Formatting for the description text */
   p {
+    text-align: start;
     margin-bottom: 20px;
     font-family: Averta, sans-serif;
     color: #fff;
