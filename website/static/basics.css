@@ -51,7 +51,7 @@ body {
   }
 
 /* Formating the title text */
-  h1 {
+  .h1_initial {
     text-align: start;
     margin-top: 50px;
     margin-bottom: 30px;
@@ -63,7 +63,7 @@ body {
     /* -webkit-text-stroke: 2px rgb(58, 100, 80); */
   }
 /* Formating the quote text */
-  h2 {
+  .h2_initial {
     text-align: left;
     margin-top: 20px;
     margin-bottom: 30px;
@@ -75,7 +75,7 @@ body {
   }
 
   /* Formatting for the description text */
-  p {
+  .p_initial {
     text-align: start;
     margin-bottom: 20px;
     font-family: Averta, sans-serif;
@@ -88,4 +88,52 @@ body {
   .btn-yellow {
     background-color: #ffc107;
     border-color: #ffc107;
+}
+
+
+/* to flip flashcards */
+.flip-card {
+  background-color: transparent;
+  width: 500px;
+  height: 200px;
+  border: 1px solid #f1f1f1;
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+  margin-left: 300px;
+}
+
+/* This container is needed to position the front and back side */
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-card-front {
+  background-color: rgb(61, 64, 63);
+  color: rgb(255, 255, 255);
+}
+
+/* Style the back side */
+.flip-card-back {
+  background-color: rgb(61, 64, 63);
+  color: white;
+  transform: rotateY(180deg);
 }

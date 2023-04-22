@@ -6,10 +6,19 @@
 {% block content %}
 
 <br/>
-<h1>{{ deck.name }}</h1>
+<h1 class="center" class="display-3">{{ deck.name }}</h1>
 
 {% for flashcard in deck.flashcards %}
-<p>{{ flashcard.name }}</p>
+    <div class="flip-card">
+        <div class="flip-card-inner">
+        <div class="flip-card-front">
+            <h3 class="center">{{ flashcard.name }}</h3>
+        </div>
+        <div class="flip-card-back">
+            <p class="center"><a href="https://leetcode.com/problems/{{ flashcard.name.replace(' ', '-') }}/" target="_blank">Try LeetCode Solution</a></p>
+        </div>
+        </div>
+    </div>
 <br />
 {% endfor %}
 

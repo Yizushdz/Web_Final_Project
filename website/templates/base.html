@@ -20,7 +20,7 @@
       crossorigin="anonymous"
     />
     <!-- to change background color, we import local css file basics.css -->
-    <link rel="stylesheet" href="static/basics.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='basics.css') }}">
 
     <title>{% block title %}Base{% endblock %}</title>
   </head>
