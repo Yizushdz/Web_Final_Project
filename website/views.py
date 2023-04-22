@@ -38,9 +38,10 @@ def home():
     return render_template("home.html", user = current_user)
 
 
-@views.route('/study-session')
-def study_session():
-    return render_template("study_session.html", user = current_user)
+@views.route('/study-session/<deck>')
+def study_session(deck):
+    deckID = Deck.query.filter_by(id = deck).first()
+    return render_template("study_session.html", user = current_user, deck = deckID)
 
 
     
@@ -72,11 +73,11 @@ def delete(id):
         return redirect(url_for('views.home'))
     
     
-@views.route('/add/<int:id>')
+@views.route('/add/<int:id>/')
 def add(id):
     try:
-
-        new_flashcard = Flashcard(name = None, deck_id = id, user_id = current_user.id)
+        problemName = request.args.get('flashName')
+        new_flashcard = Flashcard(name = problemName, deck_id = id, user_id = current_user.id)
         db.session.add(new_flashcard)
         db.session.commit()
         flash("Problem Successfully Added", category='success')
@@ -84,15 +85,3 @@ def add(id):
     except:
         flash("Unable to add", category='error')
         return redirect(url_for('views.practice_problems'))
-
-
-# @views.route('/print_deck/<int:id>')
-# def print_deck(id):
-#     try:
-#         current_deck = Deck.query.filter_by(id=id).first()
-#         return redirect(url_for('views.study_session'), deck = current_deck)
-
-#     except:
-#         flash("Unable to access deck", category='error')
-#         return redirect(url_for('views.home'))
-

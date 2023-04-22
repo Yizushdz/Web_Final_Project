@@ -27,19 +27,16 @@
 }
 </style>
 
-
-
-
-
-
 </head>
 
 <body>
-    <!----------------------------------------------------->
+
     <br />
     <h1 align="center"><strong>Practice Problems</strong></h1>
     <br />
-    {% for problem in easyProblems %}
+
+    
+{% for problem in easyProblems %}
 
     <div class="d-flex flex-column align-items-center">
         <div class="btn-group btn-group-toggle mb-3">
@@ -52,14 +49,14 @@
             </a>
             <a href="#">
                 <button type="button" class="btn btn-success reset-btn btn-lg" data-toggle="modal"
-                    data-target="#exampleModalCenter"><i class="fa-solid fa-plus"></i>
+                    data-target="#exampleModalCenter{{ problem }}"><i class="fa-solid fa-plus"></i>
                 </button>
             </a>
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+            
+
+            <div class="modal fade" id="exampleModalCenter{{ problem }}" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <form method="POST">
+                <div class="modal-dialog modal-dialog-centered" role="document" id="{{ problem }}">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLongTitle">Deck Name</h5>
@@ -69,34 +66,31 @@
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label for="deckName">Which deck would you like to add the problem in? </label>
-                                    <div class="dropdown">
-                                        <button class="btn btn-primary dropdown-toggle" type="button"
-                                            data-toggle="dropdown">Your Decks 👩‍💻
-                                            <span class="caret"></span></button>
-                                        <ul class="dropdown-menu">
-                                            {% for deck in user.decks %}
-                                            <li><a href="{{ url_for('views.add', id = deck.id) }}">{{deck.name}}</a></li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
+                                        <label for="deckName">Which deck would you like to add the problem in? </label>
+                                        {% for deck in user.decks %}
+                                        <div class="dropdown">
+                                            <button class="btn btn-primary dropdown-toggle" type="button"
+                                                data-toggle="dropdown">Your Decks 👩‍💻
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="{{ url_for('views.add', id = deck.id, flashName = problem.replace('-', ' ')) }}">{{deck.name}}</a></li>
+                                            </ul>
+                                        </div>
+                                        {% endfor %}
                                 </div>
                                 <br />
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Exit</button>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
                         </div>
-                    </form>
                 </div>
             </div>
         </div>
     </div>
-    {% endfor %}
+{% endfor %}
     <!----------------------------------------------------->
 
-    {% for problem in midProblems %}
+
+{% for problem in midProblems %}
 
     <div class="d-flex flex-column align-items-center">
         <div class="btn-group btn-group-toggle mb-3">
@@ -109,14 +103,14 @@
             </a>
             <a href="#">
                 <button type="button" class="btn btn-yellow reset-btn btn-lg" data-toggle="modal"
-                    data-target="#exampleModalCenter"><i class="fa-solid fa-plus"></i>
+                    data-target="#exampleModalCenter{{ problem }}"><i class="fa-solid fa-plus"></i>
                 </button>
             </a>
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+            
+
+            <div class="modal fade" id="exampleModalCenter{{ problem }}" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <form method="POST">
+                <div class="modal-dialog modal-dialog-centered" role="document" id="{{ problem }}">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLongTitle">Deck Name</h5>
@@ -126,34 +120,31 @@
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label for="deckName">Which deck would you like to add the problem in? </label>
-                                    <div class="dropdown">
-                                        <button class="btn btn-primary dropdown-toggle" type="button"
-                                            data-toggle="dropdown">Your Decks 👩‍💻
-                                            <span class="caret"></span></button>
-                                        <ul class="dropdown-menu">
-                                            {% for deck in user.decks %}
-                                            <li><a href="{{ url_for('views.add', id = deck.id) }}">{{deck.name}}</a></li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
+                                        <label for="deckName">Which deck would you like to add the problem in? </label>
+                                        {% for deck in user.decks %}
+                                        <div class="dropdown">
+                                            <button class="btn btn-primary dropdown-toggle" type="button"
+                                                data-toggle="dropdown">Your Decks 👩‍💻
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="{{ url_for('views.add', id = deck.id, flashName = problem.replace('-', ' ')) }}">{{deck.name}}</a></li>
+                                            </ul>
+                                        </div>
+                                        {% endfor %}
                                 </div>
                                 <br />
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Exit</button>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
                         </div>
-                    </form>
                 </div>
             </div>
         </div>
     </div>
-    {% endfor %}
-    <!----------------------------------------------------->
+{% endfor %}
 
-    {% for problem in hardProblems %}
+
+
+{% for problem in hardProblems %}
 
     <div class="d-flex flex-column align-items-center">
         <div class="btn-group btn-group-toggle mb-3">
@@ -161,19 +152,19 @@
                 class="btn btn-danger reset-btn">
                 <div>
                     <p class="mb-0">{{ problem.replace("-", " ") }}</p>
-                    <p class="mb-0">Difficulty : Hard</p>
+                    <p class="mb-0">Difficulty : Easy</p>
                 </div>
             </a>
             <a href="#">
                 <button type="button" class="btn btn-danger reset-btn btn-lg" data-toggle="modal"
-                    data-target="#exampleModalCenter"><i class="fa-solid fa-plus"></i>
+                    data-target="#exampleModalCenter{{ problem }}"><i class="fa-solid fa-plus"></i>
                 </button>
             </a>
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+            
+
+            <div class="modal fade" id="exampleModalCenter{{ problem }}" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <form method="POST">
+                <div class="modal-dialog modal-dialog-centered" role="document" id="{{ problem }}">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLongTitle">Deck Name</h5>
@@ -183,49 +174,26 @@
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label for="deckName">Which deck would you like to add the problem in? </label>
-                                    <div class="dropdown">
-                                        <button class="btn btn-primary dropdown-toggle" type="button"
-                                            data-toggle="dropdown">Your Decks 👩‍💻
-                                            <span class="caret"></span></button>
-                                        <ul class="dropdown-menu">
-                                            {% for deck in user.decks %}
-                                            <li><a href="{{ url_for('views.add', id = deck.id) }}">{{deck.name}}</a></li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
+                                        <label for="deckName">Which deck would you like to add the problem in? </label>
+                                        {% for deck in user.decks %}
+                                        <div class="dropdown">
+                                            <button class="btn btn-primary dropdown-toggle" type="button"
+                                                data-toggle="dropdown">Your Decks 👩‍💻
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="{{ url_for('views.add', id = deck.id, flashName = problem.replace('-', ' ')) }}">{{deck.name}}</a></li>
+                                            </ul>
+                                        </div>
+                                        {% endfor %}
                                 </div>
                                 <br />
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Exit</button>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
                         </div>
-                    </form>
                 </div>
             </div>
         </div>
     </div>
-    {% endfor %}
-
-    
-
-    <!-- Add more buttons with class 'reset-btn' -->
-
-    <!-- Add jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <script>
-        $('.reset-btn').on('click', function () {
-            // Add your desired action here
-            console.log('Button clicked!');
-
-            // Reset the button state after a short delay
-            setTimeout(() => {
-                $(this).blur();
-            }, 100);
-        });
-    </script>
+{% endfor %}
 
     {% endblock %}

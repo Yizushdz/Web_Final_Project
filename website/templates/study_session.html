@@ -6,9 +6,11 @@
 {% block content %}
 
 <br/>
-<h1>gagaga</h1>
+<h1>{{ deck.name }}</h1>
 
-<div class="rectangle">
-    <p>Something</p>
-</div>
+{% for flashcard in deck.flashcards %}
+<p>{{ flashcard.name }}</p>
+<br />
+{% endfor %}
+
 {% endblock %}

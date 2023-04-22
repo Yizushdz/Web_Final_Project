@@ -48,7 +48,7 @@
 
 {% for deck in user.decks %}
     <div class="rectangle">
-        <a href="/study-session">
+        <a href="/study-session/{{ deck.id }}">
             <h3 class="center" style="color: white">{{ deck.name }}</h3>
         </a>
     </div>
