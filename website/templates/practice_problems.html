@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="en">
 {% extends "base.html" %}
 
 {% block title %}Practice Problems{% endblock %}
@@ -10,197 +12,140 @@
     <!-- Add Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
     <!-- to change background color, we import local css file basics.css -->
-    <link rel="stylesheet" href="static/basics.css">
-<style>
-.reset-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    white-space: nowrap;
-}
+    <link rel="stylesheet" href="{{ url_for('static', filename='basics.css') }}">
+    <style>
+        .reset-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            white-space: nowrap;
+        }
 
-.reset-btn > div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-</style>
-
+        .reset-btn > div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
 </head>
 
 <body>
-
     <br />
     <h1 align="center"><strong>Practice Problems</strong></h1>
     <br />
 
-{% if user.is_authenticated %}
- 
-{% for problem in easyProblems %}
+    <!-- Difficulty Selection Dropdown -->
+    <div class="d-flex justify-content-center mb-4">
+        <select id="difficultySelect" class="form-select w-25">
+            <option value="all">All Difficulties</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+        </select>
+    </div>
 
-    <div class="d-flex flex-column align-items-center">
-        <div class="btn-group btn-group-toggle mb-3">
-            <a href="https://leetcode.com/problems/{{ problem }}/" target="_blank"
-                class="btn btn-success reset-btn">
-                <div>
-                    <p class="mb-0">{{ problem.replace("-", " ") }}</p>
-                    <p class="mb-0">Difficulty : Easy</p>
-                </div>
-            </a>
-            <a href="#">
-                <button type="button" class="btn btn-success reset-btn btn-lg" data-toggle="modal"
-                    data-target="#exampleModalCenter{{ problem }}"><i class="fa-solid fa-plus"></i>
-                </button>
-            </a>
-            
+    {% if user.is_authenticated %}
 
-            <div class="modal fade" id="exampleModalCenter{{ problem }}" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document" id="{{ problem }}">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Deck Name</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                        <label for="deckName">Which deck would you like to add the problem in? </label>
-                                        <div class="dropdown">
-                                            <button class="btn btn-primary dropdown-toggle" type="button"
-                                                data-toggle="dropdown">Your Decks 👩‍💻
-                                                <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                {% for deck in user.decks %}
-                                                <li><a href="{{ url_for('views.add', id = deck.id, flashName = problem.replace('-', ' ')) }}">{{deck.name}}</a></li>
-                                                {% endfor %}
-                                            </ul>
-                                        </div>
+    <div id="problemsContainer">
+        <!-- Problems will be dynamically inserted here -->
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const difficultySelect = document.getElementById('difficultySelect');
+            const problemsContainer = document.getElementById('problemsContainer');
+    
+            function renderProblems(problems, difficulty) {
+                problemsContainer.innerHTML = '';
+    
+                problems.forEach(problem => {
+                    const problemName = problem.replace('-', ' ');
+                    const problemElement = document.createElement('div');
+                    problemElement.classList.add('d-flex', 'flex-column', 'align-items-center');
+    
+                    // Determine color based on difficulty
+                    let colorClass = '';
+                    if (difficulty === 'easy') {
+                        colorClass = 'bg-success';
+                    } else if (difficulty === 'medium') {
+                        colorClass = 'bg-warning';
+                    } else if (difficulty === 'hard') {
+                        colorClass = 'bg-danger';
+                    } else {
+                        colorClass = 'bg-primary';
+                    }
+    
+                    problemElement.innerHTML = `
+                        <div class="btn-group btn-group-toggle mb-3 ${colorClass}">
+                            <a href="https://leetcode.com/problems/${problem}/" target="_blank" class="btn reset-btn">
+                                <div>
+                                    <p class="mb-0">${problemName}</p>
+                                    <p class="mb-0">Difficulty: ${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}</p>
                                 </div>
-                                <br />
+                            </a>
+                            <a href="#">
+                                <button type="button" class="btn reset-btn btn-lg" data-toggle="modal" data-target="#exampleModalCenter${problem}">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </a>
+                            <div class="modal fade" id="exampleModalCenter${problem}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document" id="${problem}">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Deck Name</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="deckName">Which deck would you like to add the problem in?</label>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                                                        Your Decks 👩‍💻
+                                                        <span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        {% for deck in user.decks %}
+                                                            <li><a href="{{ url_for('views.add', id=deck.id, flashName='${problemName}') }}">{{ deck.name }}</a></li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <br />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                </div>
-            </div>
-        </div>
-    </div>
-{% endfor %}
-    <!----------------------------------------------------->
+                    `;
+                    problemsContainer.appendChild(problemElement);
+                });
+            }
+    
+            async function fetchProblems(difficulty) {
+                const response = await fetch(`/get_problems/${difficulty}`);
+                const problems = await response.json();
+                renderProblems(problems, difficulty);
+            }
+    
+            difficultySelect.addEventListener('change', (e) => {
+                const selectedDifficulty = e.target.value;
+                fetchProblems(selectedDifficulty);
+            });
+    
+            // Initial rendering of all problems
+            fetchProblems('all');
+        });
+    </script>
+    
+    {% else %}
+    <br />
+    <h1 class="center">Please <a href="/login">Log-in</a> or <a href="/sign-up">Sign-up</a> to access our list of problems!</h1>
 
+    {% endif %}
 
-{% for problem in midProblems %}
-
-    <div class="d-flex flex-column align-items-center">
-        <div class="btn-group btn-group-toggle mb-3">
-            <a href="https://leetcode.com/problems/{{ problem }}/" target="_blank"
-                class="btn btn-yellow reset-btn">
-                <div>
-                    <p class="mb-0">{{ problem.replace("-", " ") }}</p>
-                    <p class="mb-0">Difficulty : Medium</p>
-                </div>
-            </a>
-            <a href="#">
-                <button type="button" class="btn btn-yellow reset-btn btn-lg" data-toggle="modal"
-                    data-target="#exampleModalCenter{{ problem }}"><i class="fa-solid fa-plus"></i>
-                </button>
-            </a>
-            
-
-            <div class="modal fade" id="exampleModalCenter{{ problem }}" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document" id="{{ problem }}">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Deck Name</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                        <label for="deckName">Which deck would you like to add the problem in? </label>
-                                        {% for deck in user.decks %}
-                                        <div class="dropdown">
-                                            <button class="btn btn-primary dropdown-toggle" type="button"
-                                                data-toggle="dropdown">Your Decks 👩‍💻
-                                                <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="{{ url_for('views.add', id = deck.id, flashName = problem.replace('-', ' ')) }}">{{deck.name}}</a></li>
-                                            </ul>
-                                        </div>
-                                        {% endfor %}
-                                </div>
-                                <br />
-                            </div>
-                        </div>
-                </div>
-            </div>
-        </div>
-    </div>
-{% endfor %}
-
-
-
-{% for problem in hardProblems %}
-
-    <div class="d-flex flex-column align-items-center">
-        <div class="btn-group btn-group-toggle mb-3">
-            <a href="https://leetcode.com/problems/{{ problem }}/" target="_blank"
-                class="btn btn-danger reset-btn">
-                <div>
-                    <p class="mb-0">{{ problem.replace("-", " ") }}</p>
-                    <p class="mb-0">Difficulty : Hard</p>
-                </div>
-            </a>
-            <a href="#">
-                <button type="button" class="btn btn-danger reset-btn btn-lg" data-toggle="modal"
-                    data-target="#exampleModalCenter{{ problem }}"><i class="fa-solid fa-plus"></i>
-                </button>
-            </a>
-            
-
-            <div class="modal fade" id="exampleModalCenter{{ problem }}" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document" id="{{ problem }}">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Deck Name</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                        <label for="deckName">Which deck would you like to add the problem in? </label>
-                                        {% for deck in user.decks %}
-                                        <div class="dropdown">
-                                            <button class="btn btn-primary dropdown-toggle" type="button"
-                                                data-toggle="dropdown">Your Decks 👩‍💻
-                                                <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="{{ url_for('views.add', id = deck.id, flashName = problem.replace('-', ' ')) }}">{{deck.name}}</a></li>
-                                            </ul>
-                                        </div>
-                                        {% endfor %}
-                                </div>
-                                <br />
-                            </div>
-                        </div>
-                </div>
-            </div>
-        </div>
-    </div>
-{% endfor %}
-
-{% else %}
-<br/>
-<h1 class="center">Please <a href="/login">Log-in</a> or <a href="/sign-up">Sign-up</a> to access our list of problems!</h1>
-
-{% endif %}
-
-    {% endblock %}
+{% endblock %}
+</body>
+</html>

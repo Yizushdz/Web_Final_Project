@@ -34,10 +34,6 @@ def extract_problem_names(file_path):
             if match:
                 name = match.group(1).title()
                 problem_names.append(name)
-    
-    # for problem in problem_names:
-    #     problem_names.append(problem.replace("-", " "))
-
     return problem_names
 
 def create_app():

@@ -9,6 +9,7 @@ from .models import Deck, Flashcard
 from . import db
 #
 from website import extract_problem_names
+from flask import jsonify
 
 # set up blueprint for flask application
 views = Blueprint('views', __name__)
@@ -44,14 +45,12 @@ def study_session(deck):
     return render_template("study_session.html", user = current_user, deck = deckID)
 
 
-    
-
-
+easy = extract_problem_names("LeetCodeEasy.txt")
+medium = extract_problem_names("LeetCodeMedium.txt")
+hard = extract_problem_names("LeetCodeHard.txt")
 @views.route('/practice-problems')
+
 def practice_problems():
-    easy = extract_problem_names("LeetCodeEasy.txt")
-    medium = extract_problem_names("LeetCodeMedium.txt")
-    hard = extract_problem_names("LeetCodeHard.txt")
     return render_template("practice_problems.html", user = current_user, easyProblems = easy, midProblems = medium, hardProblems = hard)
 
 
@@ -85,3 +84,16 @@ def add(id):
     except:
         flash("Unable to add", category='error')
         return redirect(url_for('views.practice_problems'))
+
+@views.route('/get_problems/<difficulty>')
+def get_problems(difficulty):
+    if difficulty == 'easy':
+        problems = easy
+    elif difficulty == 'medium':
+        problems = medium
+    elif difficulty == 'hard':
+        problems = hard
+    else:
+        problems = easy + medium + hard
+    
+    return jsonify(problems)
