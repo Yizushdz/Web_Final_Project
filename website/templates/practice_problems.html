@@ -108,7 +108,7 @@
                                                     </button>
                                                     <ul class="dropdown-menu">
                                                         {% for deck in user.decks %}
-                                                            <li><a href="{{ url_for('views.add', id=deck.id, flashName='${problemName}') }}">{{ deck.name }}</a></li>
+                                                            <li><a href="{{ url_for('views.add', id=deck.id) }}?flashName=${problem.replace('-', ' ')}">{{ deck.name }}</a></li>
                                                         {% endfor %}
                                                     </ul>
                                                 </div>
